@@ -13,7 +13,7 @@ public class ShowKingdomsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences login = getSharedPreferences("userInfo",0);
-        String userEmail = login.getString("Email",null);
+        String userEmail = login.getString("Email","");
         setContentView(R.layout.activity_show_kingdoms);
         getSupportActionBar().setTitle(userEmail);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
@@ -35,7 +35,7 @@ public class ShowKingdomsActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        switch (item.getItemId()) {
+        switch (id) {
             case R.id.action_logout:
                 Util.logOut(ShowKingdomsActivity.this);
                 finish();

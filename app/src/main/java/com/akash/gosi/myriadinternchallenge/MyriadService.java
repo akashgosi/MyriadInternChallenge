@@ -10,7 +10,7 @@ public interface MyriadService {
     @POST("/api/v1/subscribe")
     User getSubscription(@Field("email") String email);
 
-    //@GET("/api/v1/kingdoms")
-    //List<Kingdoms> getKingdoms();
+    @GET("/api/v1/kingdoms")
+    List<Kingdoms> getKingdoms();
 
 }
