@@ -54,6 +54,8 @@ public class SignUpActivity extends Activity {
         Button mEmailSignUpButton = (Button) findViewById(R.id.email_sign_up_button);
         mSignUpFormView = findViewById(R.id.sign_up_form);
         mProgressView = findViewById(R.id.sign_up_form);
+
+        //TODO: popluate Auto Complete
         populateAutoComplete();
 
 

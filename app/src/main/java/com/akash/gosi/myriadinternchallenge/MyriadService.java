@@ -13,4 +13,6 @@ public interface MyriadService {
     @GET("/api/v1/kingdoms")
     List<Kingdoms> getKingdoms();
 
+    @GET("/api/v1/kingdoms/{id}")
+    Kingdoms getQuests(@Path("id") String groupId);
 }

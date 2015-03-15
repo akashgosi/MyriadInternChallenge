@@ -5,6 +5,8 @@
     <string name="action_settings">Settings</string>
     <string name="action_logout">Log Out</string>
     <string name="title_activity_show_kingdoms">ShowKingdomsActivity</string>
+    <string name="title_activity_kingdom_quests">KingdomQuestsActivity</string>
+    <string name="title_activity_show_quests">ShowQuestsActivity</string>
 
 
 </resources>

@@ -1,12 +1,41 @@
 package com.akash.gosi.myriadinternchallenge;
 
-/**
- * Created by Akash on 3/14/2015.
- */
+
+import java.util.List;
+
 public class Kingdoms {
     private String id;
-    private String Name;
-    private String imgUrl;
+    private String name;
+    private String image;
+    private String climate;
+    private Integer population;
+    private List<Quests> quests;
+
+    public List<Quests> getQuests() {
+        return quests;
+    }
+
+    public void setQuests(List<Quests> quests) {
+        this.quests = quests;
+    }
+
+    public String getClimate() {
+        return climate;
+    }
+
+    public void setClimate(String climate) {
+        this.climate = climate;
+    }
+
+    public Integer getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(Integer population) {
+        this.population = population;
+    }
+
+
 
     public String getId() {
         return id;
@@ -17,18 +46,37 @@ public class Kingdoms {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
+
+    public static class Giver{
+
+        public String id;
+        public String name;
+        public String image;
+    }
+
+
+    public static class Quests{
+        public String id;
+        public String name;
+        public String description;
+        public String image;
+        public Giver giver;
+
+    }
+
 }
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/kingdom_info"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView style="?android:textAppearanceMedium"
+            android:id="@+id/txt_quest_name"
+            android:padding="16dp"
+            android:lineSpacingMultiplier="1.2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quest Name" />
+
+        <TextView style="?android:textAppearanceMedium"
+            android:id="@+id/txt_quest_desc"
+            android:padding="16dp"
+            android:lineSpacingMultiplier="1.2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quest Description" />
+
+        <TextView style="?android:textAppearanceMedium"
+            android:id="@+id/txt_quest_giver"
+            android:padding="16dp"
+            android:lineSpacingMultiplier="1.2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quest Giver" />
+
+        <TextView style="?android:textAppearanceMedium"
+            android:id="@+id/txt_quest_giver_info"
+            android:padding="16dp"
+            android:lineSpacingMultiplier="1.2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quest Giver Info" />
+    </LinearLayout>
+</ScrollView>

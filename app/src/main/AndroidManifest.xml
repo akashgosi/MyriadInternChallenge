@@ -40,6 +40,14 @@
             android:name=".ShowKingdomsActivity"
             android:label="@string/title_activity_show_kingdoms" >
         </activity>
+        <activity
+            android:name=".ShowQuestsActivity"
+            android:label="@string/title_activity_show_quests"
+            android:parentActivityName=".ShowKingdomsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.akash.gosi.myriadinternchallenge.ShowKingdomsActivity" />
+        </activity>
     </application>
 
 </manifest>
