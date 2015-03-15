@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/kingdom_info"
+    android:id="@+id/kingdom_first_info"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     <LinearLayout
@@ -8,43 +8,36 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView style="?android:textAppearanceMedium"
-            android:id="@+id/txt_quest_name"
+            android:id="@+id/txt_kingdom_name"
             android:padding="16dp"
             android:lineSpacingMultiplier="1.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quest Name" />
+            android:text="Kingdom Name" />
 
         <TextView style="?android:textAppearanceMedium"
-            android:id="@+id/txt_quest_desc"
+            android:id="@+id/txt_climate"
             android:padding="16dp"
             android:lineSpacingMultiplier="1.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quest Description" />
+            android:text="Climate" />
 
         <TextView style="?android:textAppearanceMedium"
-            android:id="@+id/txt_quest_image"
+            android:id="@+id/txt_population"
             android:padding="16dp"
             android:lineSpacingMultiplier="1.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quest Image" />
+            android:text="Population" />
+
 
         <TextView style="?android:textAppearanceMedium"
-            android:id="@+id/txt_quest_giver"
+            android:id="@+id/txt_kingdom_image"
             android:padding="16dp"
             android:lineSpacingMultiplier="1.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quest Giver" />
-
-        <TextView style="?android:textAppearanceMedium"
-            android:id="@+id/txt_quest_giver_image"
-            android:padding="16dp"
-            android:lineSpacingMultiplier="1.2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Giver Image" />
+            android:text="Image" />
     </LinearLayout>
 </ScrollView>

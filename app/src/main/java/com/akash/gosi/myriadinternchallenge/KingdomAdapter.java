@@ -35,14 +35,17 @@ public class KingdomAdapter extends RecyclerView.Adapter<KingdomAdapter.KingdomV
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recycler_text_view, parent, false);
 
-
         return new KingdomViewHolder(itemView, new KingdomAdapter.KingdomViewHolder.KingdomClickInterface(){
             @Override
             public void getQuestsList(View view) {
+
                 TextView mKingdomId = (TextView) view.findViewById(R.id.txtKingdomId);
                 CardView mCardView = (CardView) view.findViewById(R.id.card_view);
                 System.out.println("Kingdom id = "+mKingdomId.getText());
+
+                //Pass the kingdom Id to get the quests of that kingdom
                 Intent showQuestsIntent = new Intent(mCardView.getContext(), ShowQuestsActivity.class);
+                showQuestsIntent.putExtra("kingdomId",mKingdomId.getText());
                 mCardView.getContext().startActivity(showQuestsIntent);
 
             }
@@ -77,6 +80,7 @@ public class KingdomAdapter extends RecyclerView.Adapter<KingdomAdapter.KingdomV
         public void bindKingdomViewHolder(Kingdoms kingdom){
             this.vKingdomId.setText(kingdom.getId());
             this.vKingdomName.setText(kingdom.getName());
+
 
 
         }

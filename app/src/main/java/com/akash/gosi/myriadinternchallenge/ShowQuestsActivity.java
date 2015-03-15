@@ -16,7 +16,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.RestAdapter;
 
@@ -28,23 +31,22 @@ public class ShowQuestsActivity extends FragmentActivity {
     private View mProgressView;
     private View mQuestsView;
 
+
     private ShowQuestsTask mQuestTask = null;
 
     //Kingdom
     Kingdoms kingdom = null;
+    String kingdomId = null;
 
-
-    /**
-     *
-     * The number of pages to show
-     */
-    private static final int NUM_PAGES = 5;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
      */
     private ViewPager mPager;
+    List<Fragment> fragments = null;
+
+
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
@@ -56,35 +58,13 @@ public class ShowQuestsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_quests);
 
-        // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
+        kingdomId = getIntent().getExtras().getString("kingdomId");
+        System.out.println("KINGDOM ID ="+kingdomId);
 
         //Call the async task
         mQuestTask = new ShowQuestsTask();
         mQuestTask.execute((Void) null);
 
-    }
-
-
-
-
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-
-            return new QuestSlidePageFragment();
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
     }
 
     @Override
@@ -98,6 +78,39 @@ public class ShowQuestsActivity extends FragmentActivity {
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
     }
+
+
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+
+
+    }
+
+    private List<Fragment> getFragments() {
+        List<Fragment> fList = new ArrayList<Fragment>();
+        //First add the kingdom information
+        fList.add(QuestKingdomSlidePageFragment.newInstanceKingdom(kingdom));
+
+        for(Kingdoms.Quests quest: kingdom.getQuests()){
+            fList.add(QuestSlidePageFragment.newInstanceQuest(quest));
+
+        }
+        return fList;
+    }
+
 
     /*
  * Represents an asynchronous task to get the list of kingdoms
@@ -116,13 +129,15 @@ public class ShowQuestsActivity extends FragmentActivity {
                         .build();
 
                 MyriadService service = restAdapter.create(MyriadService.class);
-                kingdom = service.getQuests("1");
+                kingdom = service.getQuests(kingdomId);
                 if(kingdom==null){
                     throw new InterruptedException() ;
                 }
             } catch (InterruptedException e) {
                 return false;
             }
+            //Get the different fragments for the page viewer
+            fragments = getFragments();
 
             return true;
         }
@@ -135,8 +150,13 @@ public class ShowQuestsActivity extends FragmentActivity {
             if (success) {
 
                 // specify an adapter
-                System.out.println("Climate"+kingdom.getClimate().toString());
+                System.out.println("Climate " + kingdom.getClimate().toString());
                 //TODO: Set the adapter
+                // Instantiate a ViewPager and a PagerAdapter.
+                mPager = (ViewPager) findViewById(R.id.quest_pager);
+                mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                mPager.setAdapter(mPagerAdapter);
+
 
             } else {
 
@@ -151,6 +171,8 @@ public class ShowQuestsActivity extends FragmentActivity {
 
 
     }
+
+
 
     /**
      * Shows the progress UI and hides the login form.

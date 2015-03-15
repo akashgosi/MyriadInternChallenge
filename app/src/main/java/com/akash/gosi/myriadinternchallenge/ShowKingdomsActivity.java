@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
 import java.util.List;
@@ -24,12 +25,8 @@ public class ShowKingdomsActivity extends ActionBarActivity {
 
     // UI references.
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private View mProgressView;
     private View mKingdomsView;
-
-    private ShowKingdomTask mKingdomTask = null;
 
     //Kingdoms List
     List<Kingdoms> kingdoms = null;
@@ -45,14 +42,14 @@ public class ShowKingdomsActivity extends ActionBarActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.kingdom_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mKingdomsView = mRecyclerView;
         mProgressView = findViewById(R.id.kingdom_progress);
 
         //Start the Async task to get kingdoms
         showProgress(true);
-        mKingdomTask = new ShowKingdomTask();
+        ShowKingdomTask mKingdomTask = new ShowKingdomTask();
         mKingdomTask.execute((Void) null);
 
     }
@@ -119,13 +116,13 @@ public class ShowKingdomsActivity extends ActionBarActivity {
 
             if (success) {
 
-
                 // specify an adapter (see also next example)
-                mAdapter = new KingdomAdapter(kingdoms);
+                RecyclerView.Adapter mAdapter = new KingdomAdapter(kingdoms);
                 mRecyclerView.setAdapter(mAdapter);
 
             } else {
 
+                Toast.makeText(mRecyclerView.getContext(),"Error Occured Try Again",Toast.LENGTH_SHORT);
             }
         }
 

@@ -9,8 +9,25 @@ public class Kingdoms {
     private String image;
     private String climate;
     private Integer population;
+    private String language;
     private List<Quests> quests;
 
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
     public List<Quests> getQuests() {
         return quests;
     }
@@ -36,7 +53,6 @@ public class Kingdoms {
     }
 
 
-
     public String getId() {
         return id;
     }
@@ -53,13 +69,6 @@ public class Kingdoms {
         this.name = name;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public static class Giver{
 
