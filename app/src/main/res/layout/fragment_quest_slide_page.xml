@@ -7,44 +7,85 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView style="?android:textAppearanceMedium"
+
+        <TextView
             android:id="@+id/txt_quest_name"
-            android:padding="16dp"
+            android:padding="@dimen/text_padding"
             android:lineSpacingMultiplier="1.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quest Name" />
+            android:text="Quest Name"
+            android:textSize="@dimen/title_font"
 
-        <TextView style="?android:textAppearanceMedium"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true" />
+
+        <ImageView
+            android:id="@+id/img_quest_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+
+            android:layout_below="@id/txt_quest_name"/>
+
+        <TextView
+            android:id="@+id/txt_quest_desc_label"
+            android:padding="@dimen/text_padding"
+            android:lineSpacingMultiplier="1.2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quest_desc_label"
+            android:textSize="@dimen/label_font"
+
+            android:layout_below="@+id/img_quest_image" />
+        <TextView
             android:id="@+id/txt_quest_desc"
-            android:padding="16dp"
+            android:padding="@dimen/text_padding"
             android:lineSpacingMultiplier="1.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quest Description" />
+            android:text="Quest Description"
+            android:textSize="@dimen/text_font"
 
-        <TextView style="?android:textAppearanceMedium"
-            android:id="@+id/txt_quest_image"
-            android:padding="16dp"
+            android:layout_below="@id/txt_quest_desc_label" />
+
+
+        <TextView
+            android:id="@+id/txt_quest_giver_label"
+            android:padding="@dimen/text_padding"
             android:lineSpacingMultiplier="1.2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quest Image" />
+            android:text="@string/quest_giver_label"
+            android:textSize="@dimen/label_font"
 
-        <TextView style="?android:textAppearanceMedium"
+            android:layout_below="@+id/txt_quest_desc" />
+        <TextView
             android:id="@+id/txt_quest_giver"
-            android:padding="16dp"
+            android:padding="@dimen/text_padding"
             android:lineSpacingMultiplier="1.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quest Giver" />
+            android:text="Quest Giver"
+            android:textSize="@dimen/text_font"
 
-        <TextView style="?android:textAppearanceMedium"
-            android:id="@+id/txt_quest_giver_image"
-            android:padding="16dp"
-            android:lineSpacingMultiplier="1.2"
+            android:layout_below="@+id/txt_quest_giver_label"/>
+
+        <ImageView
+            android:id="@+id/img_quest_giver_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Giver Image" />
+            android:text="Giver Image"
+            android:src="@mipmap/ic_launcher"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+
+            android:scaleType="centerCrop"
+            android:layout_below="@+id/txt_quest_giver"
+            android:paddingBottom="@dimen/img_padding"
+            />
     </LinearLayout>
 </ScrollView>

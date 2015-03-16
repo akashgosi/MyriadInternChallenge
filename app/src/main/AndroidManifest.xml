@@ -2,16 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.akash.gosi.myriadinternchallenge" >
 
-    <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--
- To retrieve OAuth 2.0 tokens or invalidate tokens to disconnect a user. This disconnect
-     option is required to comply with the Google+ Sign-In developer policies
-    -->
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" /> <!-- To retrieve the account name (email) as part of sign-in: -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -38,16 +29,28 @@
 
         <activity
             android:name=".ShowKingdomsActivity"
-            android:label="@string/title_activity_show_kingdoms" >
+            android:label="@string/title_activity_show_kingdoms"
+            android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name=".ShowQuestsActivity"
             android:label="@string/title_activity_show_quests"
-            android:parentActivityName=".ShowKingdomsActivity" >
+            android:parentActivityName=".ShowKingdomsActivity"
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.akash.gosi.myriadinternchallenge.ShowKingdomsActivity" />
         </activity>
+        <activity
+            android:name=".ImageDialogActivity"
+            android:label="@string/title_activity_image_dialog"
+            android:parentActivityName=".ShowQuestsActivity"
+            android:theme="@style/myDialogTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.akash.gosi.myriadinternchallenge.ShowQuestsActivity" />
+        </activity>
+
     </application>
 
 </manifest>

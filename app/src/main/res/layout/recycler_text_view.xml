@@ -4,13 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    card_view:cardCornerRadius="4dp"
+    android:layout_height="@dimen/card_height"
+    card_view:cardCornerRadius="2dp"
     android:layout_margin="5dp"
     android:clickable="true"
     android:focusable="true"
-    android:background="?android:attr/selectableItemBackground"
-    >
+    card_view:cardElevation="@dimen/card_elevation">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,34 +17,43 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/imgKingdomImage"
+            android:id="@+id/img_kingdom_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_height"
             android:clickable="true"
             android:focusable="true"
-            android:src="@mipmap/ic_launcher"/>
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            android:tint="#88101010"
+            android:layout_centerInParent="true"
+            />
 
         <android.widget.TextView
-            android:id="@+id/txtKingdomName"
+            android:id="@+id/txt_kingdom_name"
             android:text="Kingdom Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/imgKingdomImage"
-            android:layout_toEndOf="@+id/imgKingdomImage"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:textSize="@dimen/title_font"
+            android:textColor="@color/kingdom_name"
+            android:layout_alignTop="@+id/img_kingdom_image"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignBottom="@+id/img_kingdom_image"/>
 
         <android.widget.TextView
-            android:id="@+id/txtKingdomId"
-            android:text="Sample Data"
+            android:id="@+id/txt_kingdom_id"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:clickable="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/txtKingdomName"
-            android:layout_alignStart="@+id/txtKingdomName"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
+            android:visibility="gone"/>
+        <android.widget.TextView
+            android:id="@+id/txt_image_url"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
             android:visibility="gone"/>
 
     </RelativeLayout>

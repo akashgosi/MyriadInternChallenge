@@ -3,41 +3,81 @@
     android:id="@+id/kingdom_first_info"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView style="?android:textAppearanceMedium"
+        <TextView
             android:id="@+id/txt_kingdom_name"
-            android:padding="16dp"
-            android:lineSpacingMultiplier="1.2"
+            android:padding="@dimen/text_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kingdom Name" />
+            android:text="Kingdom Name"
+            android:textSize="@dimen/title_font"
 
-        <TextView style="?android:textAppearanceMedium"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            />
+
+        <android.widget.ImageView
+            android:id="@+id/img_kingdom_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/img_padding"
+            android:background="?android:attr/selectableItemBackground"
+
+            android:scaleType="centerCrop"
+            android:layout_below="@+id/txt_kingdom_name"/>
+
+        <TextView
+            android:id="@+id/txt_kingdom_climate_label"
+            android:padding="@dimen/text_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kingdom_climate_label"
+            android:textSize="@dimen/label_font"
+
+            android:layout_above="@+id/txt_population"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+
+
+        <TextView
+            android:id="@+id/txt_kingdom_population_label"
+            android:padding="@dimen/text_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kingdom_population_label"
+            android:textSize="@dimen/label_font"
+
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
             android:id="@+id/txt_climate"
-            android:padding="16dp"
-            android:lineSpacingMultiplier="1.2"
+            android:padding="@dimen/text_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Climate" />
+            android:text="Climate"
+            android:textSize="@dimen/text_font"
 
-        <TextView style="?android:textAppearanceMedium"
+            android:layout_below="@id/img_kingdom_image"
+            android:layout_toRightOf="@id/txt_kingdom_population_label"
+            />
+        <TextView
             android:id="@+id/txt_population"
-            android:padding="16dp"
-            android:lineSpacingMultiplier="1.2"
+            android:padding="@dimen/text_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Population" />
+            android:text="Population"
+            android:textSize="@dimen/text_font"
+
+            android:layout_below="@id/txt_climate"
+            android:layout_toRightOf="@id/txt_kingdom_population_label"/>
 
 
-        <TextView style="?android:textAppearanceMedium"
-            android:id="@+id/txt_kingdom_image"
-            android:padding="16dp"
-            android:lineSpacingMultiplier="1.2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Image" />
-    </LinearLayout>
+
+    </RelativeLayout>
 </ScrollView>

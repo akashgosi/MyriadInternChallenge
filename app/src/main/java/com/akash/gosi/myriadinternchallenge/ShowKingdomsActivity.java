@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 
 import java.util.List;
@@ -36,9 +37,13 @@ public class ShowKingdomsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         SharedPreferences login = getSharedPreferences("userInfo",0);
         String userEmail = login.getString("Email","");
-        getSupportActionBar().setTitle(userEmail);
-        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         setContentView(R.layout.activity_show_kingdoms);
+
+        //Set the toolbar as the Action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(userEmail);
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.kingdom_recycler_view);
         mRecyclerView.setHasFixedSize(true);

@@ -7,6 +7,11 @@
     <string name="title_activity_show_kingdoms">ShowKingdomsActivity</string>
     <string name="title_activity_kingdom_quests">KingdomQuestsActivity</string>
     <string name="title_activity_show_quests">ShowQuestsActivity</string>
+    <string name="quest_giver_label">Quest Giver: </string>
+    <string name="quest_desc_label">Quest Description:</string>
+    <string name="kingdom_climate_label">Climate:</string>
+    <string name="kingdom_population_label">Population:</string>
+    <string name="title_activity_image_dialog">ImageDialogActivity</string>
 
 
 </resources>

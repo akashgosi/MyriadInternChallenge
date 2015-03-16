@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 
@@ -39,13 +41,16 @@ public class KingdomAdapter extends RecyclerView.Adapter<KingdomAdapter.KingdomV
             @Override
             public void getQuestsList(View view) {
 
-                TextView mKingdomId = (TextView) view.findViewById(R.id.txtKingdomId);
+                TextView mKingdomId = (TextView) view.findViewById(R.id.txt_kingdom_id);
+                TextView mKingdomImageUrl = (TextView) view.findViewById(R.id.txt_image_url);
                 CardView mCardView = (CardView) view.findViewById(R.id.card_view);
+                ImageView mKingdomImage = (ImageView) view.findViewById(R.id.img_kingdom_image);
                 System.out.println("Kingdom id = "+mKingdomId.getText());
 
                 //Pass the kingdom Id to get the quests of that kingdom
                 Intent showQuestsIntent = new Intent(mCardView.getContext(), ShowQuestsActivity.class);
                 showQuestsIntent.putExtra("kingdomId",mKingdomId.getText());
+                showQuestsIntent.putExtra("kingdomImage",mKingdomImageUrl.getText());
                 mCardView.getContext().startActivity(showQuestsIntent);
 
             }
@@ -60,18 +65,20 @@ public class KingdomAdapter extends RecyclerView.Adapter<KingdomAdapter.KingdomV
         protected ImageView vKingdomImage;
         protected CardView vKingdomCard;
         protected KingdomClickInterface vListener;
-
+        protected TextView vKingdomImageUrl;
         public KingdomViewHolder(View v, KingdomClickInterface listener){
 
             super(v);
             //Set the references
             vListener = listener;
-            vKingdomName = (TextView) v.findViewById(R.id.txtKingdomName);
-            vKingdomId = (TextView) v.findViewById(R.id.txtKingdomId);
-            vKingdomImage = (ImageView) v.findViewById(R.id.imgKingdomImage);
+            vKingdomName = (TextView) v.findViewById(R.id.txt_kingdom_name);
+            vKingdomId = (TextView) v.findViewById(R.id.txt_kingdom_id);
+            vKingdomImage = (ImageView) v.findViewById(R.id.img_kingdom_image);
             vKingdomCard = (CardView) v.findViewById(R.id.card_view);
+            vKingdomImageUrl = (TextView) v.findViewById(R.id.txt_image_url);
 
             //Set the listeners
+            vKingdomName.setOnClickListener(this);
             vKingdomCard.setOnClickListener(this);
             vKingdomImage.setOnClickListener(this);
 
@@ -80,6 +87,8 @@ public class KingdomAdapter extends RecyclerView.Adapter<KingdomAdapter.KingdomV
         public void bindKingdomViewHolder(Kingdoms kingdom){
             this.vKingdomId.setText(kingdom.getId());
             this.vKingdomName.setText(kingdom.getName());
+            this.vKingdomImageUrl.setText(kingdom.getImage());
+            Picasso.with(this.vKingdomImage.getContext()).load(kingdom.getImage()).into(vKingdomImage);
 
 
 

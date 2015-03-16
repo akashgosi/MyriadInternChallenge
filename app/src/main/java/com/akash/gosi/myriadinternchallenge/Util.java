@@ -8,6 +8,10 @@ import android.widget.Toast;
 public final class Util {
 
 
+    public static String DEFAULT_GIVER_IMAGE = "http://upload.wikimedia.org/wikipedia/en/9/96/User_icon-cp.png";
+    public static String  DEFAULT_QUEST_IMAGE = "https://bryantrice.files.wordpress.com/2013/08/compass-and-old-map.jpg";
+    public static String DEFAULT_KINGDOM_IMAGE = "http://andybraner.typepad.com/.a/6a00e54ed0df528833014e8921fb90970d-pi";
+
     /**
      * Logout Function
      */

@@ -1,10 +1,6 @@
 package com.akash.gosi.myriadinternchallenge;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentActivity;
@@ -12,11 +8,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.RecyclerView;
+
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,30 +24,29 @@ import java.util.List;
 import retrofit.RestAdapter;
 
 
-public class ShowQuestsActivity extends FragmentActivity {
+public class ShowQuestsActivity extends ActionBarActivity {
+
 
     // UI references.
     private RecyclerView.LayoutManager mLayoutManager;
     private View mProgressView;
     private View mQuestsView;
-
-
     private ShowQuestsTask mQuestTask = null;
+    Toolbar toolbar;
 
     //Kingdom
     Kingdoms kingdom = null;
+    List<Kingdoms.Quests> quests = null;
     String kingdomId = null;
-
+    String kingdomUrl = null;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
      */
     private ViewPager mPager;
+    private SlidingTabLayout mSlidingTabLayout;
     List<Fragment> fragments = null;
-
-
-
     /**
      * The pager adapter, which provides the pages to the view pager widget.
      */
@@ -59,13 +58,22 @@ public class ShowQuestsActivity extends FragmentActivity {
         setContentView(R.layout.activity_show_quests);
 
         kingdomId = getIntent().getExtras().getString("kingdomId");
-        System.out.println("KINGDOM ID ="+kingdomId);
+        kingdomUrl = getIntent().getExtras().getString("kingdomImage");
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Loading");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
         //Call the async task
         mQuestTask = new ShowQuestsTask();
         mQuestTask.execute((Void) null);
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -86,6 +94,23 @@ public class ShowQuestsActivity extends FragmentActivity {
         }
 
         @Override
+        public CharSequence getPageTitle(int position){
+            Fragment fragment = fragments.get(position);
+
+            //If its the kingdomSummary page
+            if(fragment instanceof QuestKingdomSlidePageFragment){
+                return kingdom.getName()+" Info";
+
+            }
+            if(fragment instanceof  QuestSlidePageFragment) {
+                return quests.get(position-1).name;
+            }
+
+            return "No Title Found";
+
+        }
+
+        @Override
         public Fragment getItem(int position) {
             return fragments.get(position);
         }
@@ -99,16 +124,40 @@ public class ShowQuestsActivity extends FragmentActivity {
 
     }
 
+
     private List<Fragment> getFragments() {
         List<Fragment> fList = new ArrayList<Fragment>();
         //First add the kingdom information
         fList.add(QuestKingdomSlidePageFragment.newInstanceKingdom(kingdom));
 
-        for(Kingdoms.Quests quest: kingdom.getQuests()){
+        for(Kingdoms.Quests quest: quests){
             fList.add(QuestSlidePageFragment.newInstanceQuest(quest));
 
         }
         return fList;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_logout:
+                Util.logOut(ShowQuestsActivity.this);
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
 
@@ -123,13 +172,15 @@ public class ShowQuestsActivity extends FragmentActivity {
             //load the quests in the kingdom from the api
 
             try {
-                //Get the subscription from Myriad web api
+                //Get the quests from the kingdom
                 RestAdapter restAdapter = new RestAdapter.Builder()
                         .setEndpoint("https://challenge2015.myriadapps.com")
                         .build();
 
                 MyriadService service = restAdapter.create(MyriadService.class);
                 kingdom = service.getQuests(kingdomId);
+                quests = kingdom.getQuests();
+                kingdom.setImage(kingdomUrl);
                 if(kingdom==null){
                     throw new InterruptedException() ;
                 }
@@ -157,6 +208,14 @@ public class ShowQuestsActivity extends FragmentActivity {
                 mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
                 mPager.setAdapter(mPagerAdapter);
 
+                toolbar.setTitle(kingdom.getName());
+
+                mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+                mSlidingTabLayout.setViewPager(mPager);
+                //Set tab colors
+                mSlidingTabLayout.setSelectedIndicatorColors(R.attr.colorPrimaryDark);
+                mSlidingTabLayout.setDividerColors(R.attr.colorAccent);
+
 
             } else {
 
@@ -174,61 +233,4 @@ public class ShowQuestsActivity extends FragmentActivity {
 
 
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mQuestsView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mQuestsView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mQuestsView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mQuestsView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_show_quests, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
