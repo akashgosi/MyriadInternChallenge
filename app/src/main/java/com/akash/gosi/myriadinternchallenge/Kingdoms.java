@@ -85,6 +85,30 @@ public class Kingdoms {
         public String image;
         public Giver giver;
 
+        public Quests(){
+            super();
+        }
+
+        public Quests(Quests quest){
+            Quests copyQuest = new Quests();
+            copyQuest.id = quest.id;
+            copyQuest.name = quest.name;
+            copyQuest.description = quest.description;
+            copyQuest.image = quest.image;
+            copyQuest.giver = quest.giver;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            boolean same = false;
+
+                if (o != null && o instanceof Quests)
+                {
+                    //if(this.name == ((Quests) o).name)
+                        same = (this.id == ((Quests) o).id);
+                }
+            return same;
+        }
     }
 
 }

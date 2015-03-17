@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v7.app.ActionBarActivity;
@@ -21,12 +22,43 @@ import java.io.ByteArrayOutputStream;
 
 public class QuestSlidePageFragment extends Fragment {
 
-    String questName = "No Title Found";
+
+    Kingdoms.Quests quest = new Kingdoms.Quests();
+    Kingdoms.Giver giver = new Kingdoms.Giver();
+    CheckBox mSaveQuest;
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
     }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        boolean save = mSaveQuest.isChecked();
+        if(save){
+            if(ShowQuestsActivity.savedQuests!=null&&!ShowQuestsActivity.savedQuests.contains(quest))
+                ShowQuestsActivity.savedQuests.add(quest);
+        }else{
+            if(ShowQuestsActivity.savedQuests!=null&&ShowQuestsActivity.savedQuests.contains(quest))
+                ShowQuestsActivity.savedQuests.remove(quest);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //null if there are no quests saved
+        if(ShowQuestsActivity.savedQuests!=null&&ShowQuestsActivity.savedQuests!=null&&ShowQuestsActivity.savedQuests.contains(quest)){
+            mSaveQuest.setChecked(true);
+        }
+        else{
+            mSaveQuest.setChecked(false);
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -37,16 +69,18 @@ public class QuestSlidePageFragment extends Fragment {
 
         //Get the information from the bundle
 
+
+
         //Quest Information
-        String questId = getArguments().getString("questId");
-        questName = getArguments().getString("questName");
-        String questDesc = getArguments().getString("questDesc");
-        String questImage = getArguments().getString("questImage");
+        quest.id = getArguments().getString("questId");
+        quest.name = getArguments().getString("questName");
+        quest.description = getArguments().getString("questDesc");
+        quest.image = getArguments().getString("questImage");
 
         //Giver Information
-        String questGiverId = getArguments().getString("questGiverId");
-        String questGiverName = getArguments().getString("questGiverName");
-        String questGiverImage = getArguments().getString("questGiverImage");
+        giver.id = getArguments().getString("questGiverId");
+        giver.name = getArguments().getString("questGiverName");
+        giver.image = getArguments().getString("questGiverImage");
 
         //Get the views in fragment
         TextView mQuestName = (TextView) rootView.findViewById(R.id.txt_quest_name);
@@ -54,24 +88,25 @@ public class QuestSlidePageFragment extends Fragment {
         final ImageView mQuestImage = (ImageView) rootView.findViewById(R.id.img_quest_image);
         TextView mQuestGiver = (TextView) rootView.findViewById(R.id.txt_quest_giver);
         final ImageView mQuestGiverImage = (ImageView) rootView.findViewById(R.id.img_quest_giver_image);
+        mSaveQuest = (CheckBox) rootView.findViewById(R.id.save_check);
 
         //Check if something is not available
-        questName = questName.isEmpty()?"Quest Name Not Provided":questName;
-        questDesc = questDesc.isEmpty()?"Quest Description Not Provided":questDesc;
-        questGiverName = questGiverName.isEmpty()?"Quest Giver Not Provided":questGiverName;
+        quest.name = quest.name.isEmpty()?"Quest Name Not Provided":quest.name;
+        quest.description = quest.description.isEmpty()?"Quest Description Not Provided":quest.description;
+        giver.name = giver.name.isEmpty()?"Quest Giver Not Provided":giver.name;
 
         //Set Default Image if nothing is provided
-        questImage = questImage.isEmpty()?Util.DEFAULT_QUEST_IMAGE:questImage;
-        questGiverImage = questGiverImage.isEmpty()?Util.DEFAULT_GIVER_IMAGE:questGiverImage;
+        quest.image = quest.image.isEmpty()?Util.DEFAULT_QUEST_IMAGE:quest.image;
+        giver.image = giver.image.isEmpty()?Util.DEFAULT_GIVER_IMAGE:giver.image;
 
-        mQuestName.setText(questName);
-        mQuestDescription.setText(questDesc);
-        mQuestGiver.setText(questGiverName);
-        Picasso.with(mQuestImage.getContext()).load(questImage).into(mQuestImage);
-        Picasso.with(mQuestGiverImage.getContext()).load(questGiverImage).into(mQuestGiverImage);
+        mQuestName.setText(quest.name);
+        mQuestDescription.setText(quest.description);
+        mQuestGiver.setText(giver.name);
+        Picasso.with(mQuestImage.getContext()).load(quest.image).into(mQuestImage);
+        Picasso.with(mQuestGiverImage.getContext()).load(giver.image).into(mQuestGiverImage);
 
 
-        final String finalQuestImage = questImage;
+        final String finalQuestImage = quest.image;
         mQuestImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +117,7 @@ public class QuestSlidePageFragment extends Fragment {
             }
         });
 
-        final String finalQuestGiverImage = questGiverImage;
+        final String finalQuestGiverImage = giver.image;
         mQuestGiverImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +128,21 @@ public class QuestSlidePageFragment extends Fragment {
             }
         });
 
+        final Kingdoms.Quests finalQuest = new Kingdoms.Quests(quest);
+        /*
+        mSaveQuest.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                boolean save = mSaveQuest.isChecked();
+                if(save){
+                    ShowQuestsActivity.savedQuests.add(finalQuest);
+                }else{
+                    ShowQuestsActivity.savedQuests.remove(finalQuest);
+                }
+
+            }
+        });
+        */
 
         return rootView;
     }

@@ -17,6 +17,7 @@
     <string name="saved_quests_label">Saved Quests</string>
     <string name="home_label">Home</string>
     <string name="title_activity_saved_quests">SavedQuestsActivity</string>
+    <string name="save_label">Save</string>
 
 
 </resources>

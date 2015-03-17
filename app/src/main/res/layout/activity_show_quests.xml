@@ -7,11 +7,7 @@
     <!--Action Bar-->
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"/>
+        layout="@layout/toolbar"/>
 
     <com.akash.gosi.myriadinternchallenge.SlidingTabLayout
         android:id="@+id/sliding_tabs"

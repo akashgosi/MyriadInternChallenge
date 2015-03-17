@@ -12,11 +12,7 @@
         <!--Action Bar-->
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"/>
+            layout="@layout/toolbar"/>
 
         <!-- progress bar -->
         <ProgressBar android:id="@+id/kingdom_progress" style="?android:attr/progressBarStyleLarge"

@@ -1,5 +1,7 @@
 package com.akash.gosi.myriadinternchallenge;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 
+import com.google.android.gms.games.quest.Quests;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +35,6 @@ public class ShowQuestsActivity extends ActionBarActivity {
 
 
     // UI references.
-    private RecyclerView.LayoutManager mLayoutManager;
-    private View mProgressView;
-    private View mQuestsView;
     private ShowQuestsTask mQuestTask = null;
     Toolbar toolbar;
 
@@ -40,6 +44,8 @@ public class ShowQuestsActivity extends ActionBarActivity {
     String kingdomId = null;
     String kingdomUrl = null;
 
+    //To store the saved quests
+    public static List<Kingdoms.Quests> savedQuests = new ArrayList<Kingdoms.Quests>();
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
@@ -65,12 +71,25 @@ public class ShowQuestsActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Loading");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
+        savedQuests = new ArrayList<Kingdoms.Quests>();
 
         //Call the async task
         mQuestTask = new ShowQuestsTask();
         mQuestTask.execute((Void) null);
+
+
+        //Get the saved quest ids
+        SharedPreferences preferences = getSharedPreferences("savedItems", Context.MODE_PRIVATE);
+        String quests = preferences.getString("quests",null);
+        Type listType = new TypeToken<ArrayList<Kingdoms.Quests>>() {}.getType();
+
+        GsonBuilder gsonb = new GsonBuilder();
+        Gson gson = gsonb.create();
+        savedQuests = gson.fromJson(quests, listType);
+
+        //There are no saved Quests create a black list
+        if(savedQuests==null)
+            savedQuests = new ArrayList<Kingdoms.Quests>();
 
     }
 
@@ -138,6 +157,23 @@ public class ShowQuestsActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        GsonBuilder gsonb = new GsonBuilder();
+        Gson gson = gsonb.create();
+
+        //Save the quests
+        String value = gson.toJson(savedQuests);
+        SharedPreferences prefs = getSharedPreferences("savedItems", Context.MODE_PRIVATE);
+        SharedPreferences.Editor e = prefs.edit();
+        e.putString("quests", value);
+        e.commit();
+    }
+
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -200,9 +236,7 @@ public class ShowQuestsActivity extends ActionBarActivity {
 
             if (success) {
 
-                // specify an adapter
-                System.out.println("Climate " + kingdom.getClimate().toString());
-                //TODO: Set the adapter
+
                 // Instantiate a ViewPager and a PagerAdapter.
                 mPager = (ViewPager) findViewById(R.id.quest_pager);
                 mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
@@ -227,6 +261,8 @@ public class ShowQuestsActivity extends ActionBarActivity {
 
             //showProgress(false);
         }
+
+
 
 
     }
