@@ -12,6 +12,11 @@
     <string name="kingdom_climate_label">Climate:</string>
     <string name="kingdom_population_label">Population:</string>
     <string name="title_activity_image_dialog">ImageDialogActivity</string>
+    <string name="openDrawer">Drawer Open</string>
+    <string name="closeDrawer">Drawer Closed</string>
+    <string name="saved_quests_label">Saved Quests</string>
+    <string name="home_label">Home</string>
+    <string name="title_activity_saved_quests">SavedQuestsActivity</string>
 
 
 </resources>

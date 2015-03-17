@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/img_padding"
             android:background="?android:attr/selectableItemBackground"
-
+            android:clickable="true"
             android:scaleType="centerCrop"
             android:layout_below="@+id/txt_kingdom_name"/>
 
@@ -36,6 +36,8 @@
             android:layout_height="wrap_content"
             android:text="@string/kingdom_climate_label"
             android:textSize="@dimen/label_font"
+            android:background="?android:attr/selectableItemBackground"
+            android:longClickable="true"
 
             android:layout_above="@+id/txt_population"
             android:layout_alignParentLeft="true"

@@ -11,8 +11,8 @@
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
-        <item name="colorPrimary">#2196F3</item>
-        <item name="colorPrimaryDark">#1976D2</item>
-        <item name="colorAccent">#FF4081</item>
+        <item name="colorPrimary">#8EA4A7</item>
+        <item name="colorPrimaryDark">#385C75</item>
+        <item name="colorAccent">#F4A959</item>
     </style>
 </resources>

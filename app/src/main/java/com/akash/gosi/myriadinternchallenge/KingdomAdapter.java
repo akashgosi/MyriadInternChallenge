@@ -45,7 +45,6 @@ public class KingdomAdapter extends RecyclerView.Adapter<KingdomAdapter.KingdomV
                 TextView mKingdomImageUrl = (TextView) view.findViewById(R.id.txt_image_url);
                 CardView mCardView = (CardView) view.findViewById(R.id.card_view);
                 ImageView mKingdomImage = (ImageView) view.findViewById(R.id.img_kingdom_image);
-                System.out.println("Kingdom id = "+mKingdomId.getText());
 
                 //Pass the kingdom Id to get the quests of that kingdom
                 Intent showQuestsIntent = new Intent(mCardView.getContext(), ShowQuestsActivity.class);

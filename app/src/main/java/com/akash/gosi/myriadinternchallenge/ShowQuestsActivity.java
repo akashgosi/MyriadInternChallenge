@@ -88,7 +88,7 @@ public class ShowQuestsActivity extends ActionBarActivity {
     }
 
 
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
         }

@@ -6,8 +6,10 @@ import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -24,6 +26,7 @@ import retrofit.RestAdapter;
 
 public class ShowKingdomsActivity extends ActionBarActivity {
 
+
     // UI references.
     private RecyclerView mRecyclerView;
     private View mProgressView;
@@ -32,11 +35,30 @@ public class ShowKingdomsActivity extends ActionBarActivity {
     //Kingdoms List
     List<Kingdoms> kingdoms = null;
 
+    //Recycler view references for navigation bar
+    RecyclerView mSlidingRecyclerView;
+    RecyclerView.Adapter mSlidingAdapter;
+    RecyclerView.LayoutManager mSlidingLayoutManager;
+    ActionBarDrawerToggle mDrawerToggle;
+
+
+
+
+    //User Info variables
+    String userEmail;
+    String userName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences login = getSharedPreferences("userInfo",0);
-        String userEmail = login.getString("Email","");
+
+        //Titles and icons for the navigation bar
+        String TITLES[] = {getResources().getText(R.string.saved_quests_label).toString()};
+        int ICONS[] = {R.mipmap.ic_launcher};
+
+        userEmail = login.getString("Email","");
+        userName = login.getString("Name","Name not available");
         setContentView(R.layout.activity_show_kingdoms);
 
         //Set the toolbar as the Action bar
@@ -44,11 +66,13 @@ public class ShowKingdomsActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(userEmail);
 
-
+        //Set the Recycler View to show the kingdoms
         mRecyclerView = (RecyclerView) findViewById(R.id.kingdom_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        //To make the spining loader before loading the kingdoms
         mKingdomsView = mRecyclerView;
         mProgressView = findViewById(R.id.kingdom_progress);
 
@@ -56,6 +80,38 @@ public class ShowKingdomsActivity extends ActionBarActivity {
         showProgress(true);
         ShowKingdomTask mKingdomTask = new ShowKingdomTask();
         mKingdomTask.execute((Void) null);
+
+
+        //Create a menu item object
+        MenuItems menuItems = new MenuItems(TITLES,ICONS,userName,userEmail);
+        //Sliding Drawer
+        //Set the Recycler View to show the list of rows on the navigation drawer
+        mSlidingRecyclerView = (RecyclerView) findViewById(R.id.sliding_recycler_view);
+        mSlidingRecyclerView.setHasFixedSize(true);
+        mSlidingAdapter = new SlidingAdapter(menuItems);
+        mSlidingRecyclerView.setAdapter(mSlidingAdapter);
+        mSlidingLayoutManager = new LinearLayoutManager(this);
+        mSlidingRecyclerView.setLayoutManager(mSlidingLayoutManager);
+
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.sliding_bar);
+        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,toolbar,R.string.openDrawer,R.string.closeDrawer){
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+        }; // Drawer Toggle Object Made
+        mDrawerLayout.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
+        mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
+
+
+
 
     }
 

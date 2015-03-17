@@ -6,11 +6,11 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
-        <item name="colorPrimary">#2196F3</item>
-        <item name="colorPrimaryDark">#1976D2</item>
-        <item name="colorAccent">#FF4081</item>
+        <item name="colorPrimary">#8EA4A7</item>
+        <item name="colorPrimaryDark">#385C75</item>
+        <item name="colorAccent">#F4A959</item>
     </style>
-    <style name="myDialogTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="myDialogTheme" parent="Theme.AppCompat.Dialog">
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFrame">@null</item>
