@@ -95,9 +95,6 @@ public class QuestSlidePageFragment extends Fragment {
         quest.image = quest.image.isEmpty() ? Util.DEFAULT_QUEST_IMAGE : quest.image;
 
 
-
-
-
         quest.giver.name = quest.giver.name.isEmpty() ? "Quest Giver Not Provided" : quest.giver.name;
         quest.giver.image = quest.giver.image.isEmpty() ? Util.DEFAULT_GIVER_IMAGE : quest.giver.image;
         mQuestGiver.setText(quest.giver.name);
@@ -134,23 +131,6 @@ public class QuestSlidePageFragment extends Fragment {
                 }
             });
 
-
-        //final Kingdoms.Quests finalQuest = new Kingdoms.Quests(quest);
-        /*
-        mSaveQuest.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                boolean save = mSaveQuest.isChecked();
-                if(save){
-                    ShowQuestsActivity.savedQuests.add(finalQuest);
-                }else{
-                    ShowQuestsActivity.savedQuests.remove(finalQuest);
-                }
-
-            }
-        });
-        */
-
         return rootView;
     }
 
@@ -170,9 +150,9 @@ public class QuestSlidePageFragment extends Fragment {
 
         //Giver Information
 
-            kingdomFragmentInfo.putString("questGiverId", quest.giver.id);
-            kingdomFragmentInfo.putString("questGiverName", quest.giver.name);
-            kingdomFragmentInfo.putString("questGiverImage", quest.giver.image);
+        kingdomFragmentInfo.putString("questGiverId", quest.giver.id);
+        kingdomFragmentInfo.putString("questGiverName", quest.giver.name);
+        kingdomFragmentInfo.putString("questGiverImage", quest.giver.image);
 
 
         fragment.setArguments(kingdomFragmentInfo);

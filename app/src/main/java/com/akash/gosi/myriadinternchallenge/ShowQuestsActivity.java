@@ -45,7 +45,7 @@ public class ShowQuestsActivity extends ActionBarActivity {
     String kingdomUrl = null;
 
     //To store the saved quests
-    public static List<Kingdoms.Quests> savedQuests = new ArrayList<Kingdoms.Quests>();
+    public static ArrayList<Kingdoms.Quests> savedQuests = new ArrayList<Kingdoms.Quests>();
     public static   boolean hasQuests = false;
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -123,6 +123,7 @@ public class ShowQuestsActivity extends ActionBarActivity {
         SharedPreferences.Editor e = prefs.edit();
         e.putString(getResources().getString(R.string.sr_saved_quests), value);
         e.commit();
+
     }
 
     public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {

@@ -31,7 +31,7 @@ public class SavedQuestsActivity extends ActionBarActivity {
 
     //Kingdom
     Kingdoms kingdom = null;
-    List<Kingdoms.Quests> savedQuests = null;
+    ArrayList<Kingdoms.Quests> savedQuests = null;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -66,6 +66,9 @@ public class SavedQuestsActivity extends ActionBarActivity {
         Gson gson = gsonb.create();
         savedQuests = gson.fromJson(quests, listType);
 
+        //Update the static saved quests so it can be updated
+        ShowQuestsActivity.savedQuests = (ArrayList<Kingdoms.Quests>)savedQuests.clone();
+
         //Get the fragments for the quests
         //Null when visting this activity without visiting the showquests activity
         if(savedQuests!=null&&savedQuests.size()>0) {
@@ -95,9 +98,24 @@ public class SavedQuestsActivity extends ActionBarActivity {
         mSlidingTabLayout.setDividerColors(R.attr.colorAccent);
 
 
-
-
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GsonBuilder gsonb = new GsonBuilder();
+        Gson gson = gsonb.create();
+
+        //Update the quests
+        String value = gson.toJson(ShowQuestsActivity.savedQuests);
+        SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.sr_saved_items), Context.MODE_PRIVATE);
+        SharedPreferences.Editor e = prefs.edit();
+        e.putString(getResources().getString(R.string.sr_saved_quests), value);
+        e.commit();
+        ShowQuestsActivity.savedQuests = new ArrayList<Kingdoms.Quests>();
+    }
+
+
 
 
     @Override
