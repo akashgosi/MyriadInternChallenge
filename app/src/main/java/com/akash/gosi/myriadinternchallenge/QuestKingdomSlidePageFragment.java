@@ -53,7 +53,7 @@ public class QuestKingdomSlidePageFragment extends Fragment {
 
         //Make the image popup
         final String finalKingdomImage = kingdomImage;
-        mKingdomImage.setOnClickListener(new View.OnClickListener() {
+        mKingdomName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Pass the image to the image dialog activity
@@ -63,7 +63,7 @@ public class QuestKingdomSlidePageFragment extends Fragment {
             }
         });
 
-
+        mKingdomName.bringToFront();
         return rootView;
     }
 

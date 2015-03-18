@@ -66,8 +66,7 @@ public class SavedQuestsActivity extends ActionBarActivity {
         Gson gson = gsonb.create();
         savedQuests = gson.fromJson(quests, listType);
 
-        //Update the static saved quests so it can be updated
-        ShowQuestsActivity.savedQuests = (ArrayList<Kingdoms.Quests>)savedQuests.clone();
+
 
         //Get the fragments for the quests
         //Null when visting this activity without visiting the showquests activity
@@ -77,6 +76,9 @@ public class SavedQuestsActivity extends ActionBarActivity {
             }
             toolbar.setTitle("Saved Quests");
             setSupportActionBar(toolbar);
+            //Update the static saved quests so it can be updated
+            ShowQuestsActivity.savedQuests = (ArrayList<Kingdoms.Quests>)savedQuests.clone();
+            ShowQuestsActivity.hasQuests = true;
 
         }else{
             toolbar.setTitle("No Saved Quests");
@@ -94,8 +96,7 @@ public class SavedQuestsActivity extends ActionBarActivity {
         mSlidingTabLayout.setViewPager(mPager);
 
         //Set tab colors
-        mSlidingTabLayout.setSelectedIndicatorColors(R.attr.colorPrimaryDark);
-        mSlidingTabLayout.setDividerColors(R.attr.colorAccent);
+        mSlidingTabLayout.setSelectedIndicatorColors(R.color.tab_selected,R.color.white);
 
 
     }

@@ -19,5 +19,8 @@
     <color name="kingdom_name">#FFFFFF</color>
     <color name="image_tint">#46000000</color>
     <color name="dialog_background">#88101010</color>
+    <color name="image_text">#FFFFFF</color>
+    <color name="nav_bar_background">#FFFFFFFF</color>
+    <color name="tab_selected">#ff00c0e5</color>
 
 </resources>

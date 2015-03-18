@@ -253,8 +253,7 @@ public class ShowQuestsActivity extends ActionBarActivity {
                 mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
                 mSlidingTabLayout.setViewPager(mPager);
                 //Set tab colors
-                mSlidingTabLayout.setSelectedIndicatorColors(R.attr.colorPrimaryDark);
-                mSlidingTabLayout.setDividerColors(R.attr.colorAccent);
+                mSlidingTabLayout.setSelectedIndicatorColors(R.color.tab_selected,R.color.white);
 
 
             } else {

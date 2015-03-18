@@ -6,7 +6,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.akash.gosi.myriadinternchallenge.SignUpActivity"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:theme="@style/Theme.AppCompat.Light">
 
     <!-- Login progress -->
     <ProgressBar android:id="@+id/sign_up_progress" style="?android:attr/progressBarStyleLarge"
@@ -40,7 +41,8 @@
                 android:autoText="false"
                 android:inputType="textCapWords"
                 android:imeOptions="actionNext"
-             />
+
+                />
 
             <AutoCompleteTextView
                 android:layout_width="match_parent"
@@ -48,7 +50,7 @@
                 android:id="@+id/email"
                 android:inputType="textEmailAddress"
                 android:hint="@string/prompt_email"
-                android:imeOptions="actionDone"/>
+                android:imeOptions="actionDone" />
 
             <Button android:id="@+id/email_sign_up_button" style="?android:textAppearanceSmall"
                 android:layout_width="match_parent" android:layout_height="wrap_content"

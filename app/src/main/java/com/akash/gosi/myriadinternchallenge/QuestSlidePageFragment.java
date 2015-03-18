@@ -40,6 +40,9 @@ public class QuestSlidePageFragment extends Fragment {
         if(save){
             if(!ShowQuestsActivity.savedQuests.contains(quest))
                 ShowQuestsActivity.savedQuests.add(quest);
+                if(!ShowQuestsActivity.hasQuests){
+                    ShowQuestsActivity.hasQuests=true;
+                }
         }else{
             if(ShowQuestsActivity.savedQuests.contains(quest))
                 ShowQuestsActivity.savedQuests.remove(quest);
@@ -109,7 +112,8 @@ public class QuestSlidePageFragment extends Fragment {
 
 
         final String finalQuestImage = quest.image;
-        mQuestImage.setOnClickListener(new View.OnClickListener() {
+
+        mQuestName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Pass the image to the image dialog activity
@@ -120,17 +124,20 @@ public class QuestSlidePageFragment extends Fragment {
         });
 
 
-            final String finalQuestGiverImage = quest.giver.image;
-            mQuestGiverImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Pass the image to the image dialog activity
-                    Intent dialogIntent = new Intent(mQuestGiverImage.getContext(), ImageDialogActivity.class);
-                    dialogIntent.putExtra("dialogPicture", finalQuestGiverImage);
-                    startActivity(dialogIntent);
-                }
-            });
 
+        final String finalQuestGiverImage = quest.giver.image;
+        mQuestGiverImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Pass the image to the image dialog activity
+                Intent dialogIntent = new Intent(mQuestGiverImage.getContext(), ImageDialogActivity.class);
+                dialogIntent.putExtra("dialogPicture", finalQuestGiverImage);
+                startActivity(dialogIntent);
+
+            }
+        });
+
+        mQuestName.bringToFront();
         return rootView;
     }
 

@@ -24,28 +24,21 @@
             android:focusable="true"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher"
-            android:tint="@color/image_tint"
-            android:layout_centerInParent="true"
-            android:contentDescription="Image of the Kingdom"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true" />
+            android:tint="@color/image_tint" />
 
         <android.widget.TextView
             android:id="@+id/txt_kingdom_name"
             android:text="Kingdom Name"
+            android:textColor="@color/image_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
             android:focusable="true"
-            android:textColor="#ffffffff"
             android:background="?android:attr/selectableItemBackground"
             android:textSize="@dimen/title_font"
-            android:layout_below="@+id/img_kingdom_image"
-            android:gravity="right|bottom"
-            android:padding="12dip"/>
-
-
-
+            android:padding="12dip"
+            android:gravity="end|bottom"
+            />
 
         <android.widget.TextView
             android:id="@+id/txt_kingdom_id"

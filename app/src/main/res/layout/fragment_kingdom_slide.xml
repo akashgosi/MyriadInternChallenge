@@ -7,42 +7,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/txt_kingdom_name"
-            android:padding="@dimen/text_padding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Kingdom Name"
-            android:textSize="@dimen/title_font"
-
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            />
 
         <android.widget.ImageView
             android:id="@+id/img_kingdom_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             android:paddingBottom="@dimen/img_padding"
+            android:scaleType="centerCrop"
+            android:clickable="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:tint="@color/image_tint" />
+
+        <TextView
+            android:id="@+id/txt_kingdom_name"
+            android:padding="@dimen/text_padding"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:text="Kingdom Name"
+            android:textColor="@color/image_text"
+            android:textSize="@dimen/title_font"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:scaleType="centerCrop"
-            android:layout_below="@+id/txt_kingdom_name"/>
+            android:layout_alignBottom="@id/img_kingdom_image"
+            android:gravity="bottom"/>
+
+
 
         <TextView
             android:id="@+id/txt_kingdom_climate_label"
             android:padding="@dimen/text_padding"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/kingdom_climate_label"
             android:textSize="@dimen/label_font"
             android:background="?android:attr/selectableItemBackground"
+            android:layout_below="@id/img_kingdom_image"
             android:longClickable="true"
 
             android:layout_above="@+id/txt_population"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
-
 
 
         <TextView
