@@ -25,14 +25,16 @@
         <LinearLayout android:id="@+id/email_sign_up_form" android:layout_width="match_parent"
             android:layout_height="match_parent" android:orientation="vertical" android:layout_gravity="center"
             android:gravity="center_vertical|center_horizontal"
-            android:measureWithLargestChild="false">
+            android:measureWithLargestChild="false"
+            android:weightSum="1">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:id="@+id/imageButton"
                 android:layout_gravity="center_horizontal"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/launcher_image"
+                android:layout_weight="2" />
 
             <AutoCompleteTextView android:id="@+id/name" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:hint="@string/prompt_name"

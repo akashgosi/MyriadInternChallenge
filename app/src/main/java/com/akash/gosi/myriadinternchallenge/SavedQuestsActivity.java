@@ -52,8 +52,7 @@ public class SavedQuestsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_saved_quests);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("No Saved Quests");
-        setSupportActionBar(toolbar);
+
 
 
         //Get the saved quests
@@ -76,6 +75,7 @@ public class SavedQuestsActivity extends ActionBarActivity {
             }
             toolbar.setTitle("Saved Quests");
             setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //Update the static saved quests so it can be updated
             ShowQuestsActivity.savedQuests = (ArrayList<Kingdoms.Quests>)savedQuests.clone();
             ShowQuestsActivity.hasQuests = true;
@@ -83,6 +83,7 @@ public class SavedQuestsActivity extends ActionBarActivity {
         }else{
             toolbar.setTitle("No Saved Quests");
             setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             mNoQuests = (TextView) findViewById(R.id.txt_no_quests);
             mNoQuests.setVisibility(View.VISIBLE);
         }
@@ -96,7 +97,7 @@ public class SavedQuestsActivity extends ActionBarActivity {
         mSlidingTabLayout.setViewPager(mPager);
 
         //Set tab colors
-        mSlidingTabLayout.setSelectedIndicatorColors(R.color.tab_selected,R.color.white);
+        mSlidingTabLayout.setSelectedIndicatorColors(R.color.tab_selected, R.color.white);
 
 
     }
@@ -116,7 +117,18 @@ public class SavedQuestsActivity extends ActionBarActivity {
         ShowQuestsActivity.savedQuests = new ArrayList<Kingdoms.Quests>();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mPager.getCurrentItem() == 0) {
+            // If the user is currently looking at the first step, allow the system to handle the
+            // Back button. This calls finish() on this activity and pops the back stack.
+            super.onBackPressed();
 
+        } else {
+            // Otherwise, select the previous step.
+            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+        }
+    }
 
 
     @Override

@@ -55,7 +55,7 @@ public class ShowKingdomsActivity extends ActionBarActivity {
 
         //Titles and icons for the navigation bar
         String TITLES[] = {getResources().getText(R.string.saved_quests_label).toString()};
-        int ICONS[] = {R.mipmap.ic_launcher};
+        int ICONS[] = {R.mipmap.ic_saved};
 
         userEmail = login.getString("Email","");
         userName = login.getString("Name","Name not available");
