@@ -3,7 +3,7 @@
           Base application theme for API 21+. This theme replaces
           MyTheme from resources/values/styles.xml on API 21+ devices.
       -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="windowActionBar">false</item>-->
         <item name="android:windowActionBar">false</item>
         <item name="android:windowContentTransitions">true</item>

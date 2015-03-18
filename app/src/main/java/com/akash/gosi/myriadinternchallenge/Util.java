@@ -22,16 +22,17 @@ public final class Util {
         Ed.putString("Email","");
         Ed.commit();
 
-        //Removed the saved quests
-        SharedPreferences prefs = context.getSharedPreferences("savedItems", Context.MODE_PRIVATE);
+        //Removed the saved quests upon logout
+        SharedPreferences prefs = context.getSharedPreferences(context.getResources().getString(R.string.sr_saved_items), Context.MODE_PRIVATE);
         SharedPreferences.Editor e = prefs.edit();
-        e.remove("savedItems");
+        e.putString(context.getResources().getString(R.string.sr_saved_quests),"");
+        e.remove(context.getResources().getString(R.string.sr_saved_quests));
         e.commit();
 
-        Toast.makeText(context, "Logout Successful",Toast.LENGTH_SHORT).show();
         Intent showKingdomsIntent = new Intent(context, MainActivity.class);
         showKingdomsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(showKingdomsIntent);
+        Toast.makeText(context, "Logout Successful",Toast.LENGTH_SHORT).show();
 
 
 

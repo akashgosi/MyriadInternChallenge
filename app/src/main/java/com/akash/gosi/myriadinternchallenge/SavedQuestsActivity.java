@@ -12,10 +12,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,7 +31,7 @@ public class SavedQuestsActivity extends ActionBarActivity {
 
     //Kingdom
     Kingdoms kingdom = null;
-    Kingdoms.Quests[] savedQuests = null;
+    List<Kingdoms.Quests> savedQuests = null;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -34,7 +39,8 @@ public class SavedQuestsActivity extends ActionBarActivity {
      */
     private ViewPager mPager;
     private SlidingTabLayout mSlidingTabLayout;
-    List<Fragment> fragments = null;
+    private TextView mNoQuests;
+    List<Fragment> fragments = new ArrayList<Fragment>();
     /**
      * The pager adapter, which provides the pages to the view pager widget.
      */
@@ -45,23 +51,41 @@ public class SavedQuestsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_quests);
 
-        //Get the saved quest ids and their kingdom ids
-        SharedPreferences preferences = getSharedPreferences("savedItems", Context.MODE_PRIVATE);
-        String quests = preferences.getString("quests",null);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("No Saved Quests");
+        setSupportActionBar(toolbar);
+
+
+        //Get the saved quests
+        SharedPreferences preferences = getSharedPreferences(getResources().getString(R.string.sr_saved_items), Context.MODE_PRIVATE);
+        String quests = preferences.getString(getResources().getString(R.string.sr_saved_quests),null);
+
+        Type listType = new TypeToken<ArrayList<Kingdoms.Quests>>() {}.getType();
 
         GsonBuilder gsonb = new GsonBuilder();
         Gson gson = gsonb.create();
-        savedQuests = gson.fromJson(quests, Kingdoms.Quests[].class);
+        savedQuests = gson.fromJson(quests, listType);
 
         //Get the fragments for the quests
-        for(Kingdoms.Quests quest:savedQuests){
-            fragments.add(QuestSlidePageFragment.newInstanceQuest(quest));
+        //Null when visting this activity without visiting the showquests activity
+        if(savedQuests!=null&&savedQuests.size()>0) {
+            for (Kingdoms.Quests quest : savedQuests) {
+                fragments.add(QuestSlidePageFragment.newInstanceQuest(quest));
+            }
+            toolbar.setTitle("Saved Quests");
+            setSupportActionBar(toolbar);
+
+        }else{
+            toolbar.setTitle("No Saved Quests");
+            setSupportActionBar(toolbar);
+            mNoQuests = (TextView) findViewById(R.id.txt_no_quests);
+            mNoQuests.setVisibility(View.VISIBLE);
         }
 
         mPager = (ViewPager) findViewById(R.id.saved_quest_pager);
         mPagerAdapter = new SavedScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-        toolbar.setTitle("Saved Quests");
+
 
         mSlidingTabLayout=(SlidingTabLayout) findViewById(R.id.saved_quest_sliding_tabs);
         mSlidingTabLayout.setViewPager(mPager);
@@ -71,13 +95,15 @@ public class SavedQuestsActivity extends ActionBarActivity {
         mSlidingTabLayout.setDividerColors(R.attr.colorAccent);
 
 
+
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_saved_quests, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -88,12 +114,15 @@ public class SavedQuestsActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        switch (id) {
+            case R.id.action_logout:
+                Util.logOut(SavedQuestsActivity.this);
+                finish();
+                return true;
 
-        return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private class SavedScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
@@ -104,7 +133,7 @@ public class SavedQuestsActivity extends ActionBarActivity {
         @Override
         public CharSequence getPageTitle(int position){
             Fragment fragment = fragments.get(position);
-            return savedQuests[position].name;
+            return savedQuests.get(position).name;
 
 
         }

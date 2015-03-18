@@ -46,6 +46,7 @@ public class ShowQuestsActivity extends ActionBarActivity {
 
     //To store the saved quests
     public static List<Kingdoms.Quests> savedQuests = new ArrayList<Kingdoms.Quests>();
+    public static   boolean hasQuests = false;
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
@@ -79,17 +80,19 @@ public class ShowQuestsActivity extends ActionBarActivity {
 
 
         //Get the saved quest ids
-        SharedPreferences preferences = getSharedPreferences("savedItems", Context.MODE_PRIVATE);
-        String quests = preferences.getString("quests",null);
-        Type listType = new TypeToken<ArrayList<Kingdoms.Quests>>() {}.getType();
+        SharedPreferences preferences = getSharedPreferences(getResources().getString(R.string.sr_saved_items), Context.MODE_PRIVATE);
+        String quests = preferences.getString(getResources().getString(R.string.sr_saved_quests),null);
+        Type listType = new TypeToken<ArrayList<Kingdoms.Quests>>() { }.getType();
 
         GsonBuilder gsonb = new GsonBuilder();
         Gson gson = gsonb.create();
         savedQuests = gson.fromJson(quests, listType);
 
-        //There are no saved Quests create a black list
-        if(savedQuests==null)
+        //There are no saved Quests create a blank list
+        if(savedQuests==null||savedQuests.size()==0) {
             savedQuests = new ArrayList<Kingdoms.Quests>();
+            hasQuests = false;
+        }else{ hasQuests = true; }
 
     }
 
@@ -99,13 +102,28 @@ public class ShowQuestsActivity extends ActionBarActivity {
         if (mPager.getCurrentItem() == 0) {
             // If the user is currently looking at the first step, allow the system to handle the
             // Back button. This calls finish() on this activity and pops the back stack.
+            //super.onBackPressed();
             super.onBackPressed();
+
         } else {
             // Otherwise, select the previous step.
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GsonBuilder gsonb = new GsonBuilder();
+        Gson gson = gsonb.create();
+
+        //Save the quests
+        String value = gson.toJson(savedQuests);
+        SharedPreferences prefs = getSharedPreferences(getResources().getString(R.string.sr_saved_items), Context.MODE_PRIVATE);
+        SharedPreferences.Editor e = prefs.edit();
+        e.putString(getResources().getString(R.string.sr_saved_quests), value);
+        e.commit();
+    }
 
     public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
@@ -156,20 +174,7 @@ public class ShowQuestsActivity extends ActionBarActivity {
         return fList;
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
 
-        GsonBuilder gsonb = new GsonBuilder();
-        Gson gson = gsonb.create();
-
-        //Save the quests
-        String value = gson.toJson(savedQuests);
-        SharedPreferences prefs = getSharedPreferences("savedItems", Context.MODE_PRIVATE);
-        SharedPreferences.Editor e = prefs.edit();
-        e.putString("quests", value);
-        e.commit();
-    }
 
 
 
@@ -210,7 +215,7 @@ public class ShowQuestsActivity extends ActionBarActivity {
             try {
                 //Get the quests from the kingdom
                 RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint("https://challenge2015.myriadapps.com")
+                        .setEndpoint(getResources().getString(R.string.challenge_myriadapps))
                         .build();
 
                 MyriadService service = restAdapter.create(MyriadService.class);

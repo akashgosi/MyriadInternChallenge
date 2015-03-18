@@ -24,7 +24,6 @@ public class QuestSlidePageFragment extends Fragment {
 
 
     Kingdoms.Quests quest = new Kingdoms.Quests();
-    Kingdoms.Giver giver = new Kingdoms.Giver();
     CheckBox mSaveQuest;
 
 
@@ -39,10 +38,10 @@ public class QuestSlidePageFragment extends Fragment {
         super.onPause();
         boolean save = mSaveQuest.isChecked();
         if(save){
-            if(ShowQuestsActivity.savedQuests!=null&&!ShowQuestsActivity.savedQuests.contains(quest))
+            if(!ShowQuestsActivity.savedQuests.contains(quest))
                 ShowQuestsActivity.savedQuests.add(quest);
         }else{
-            if(ShowQuestsActivity.savedQuests!=null&&ShowQuestsActivity.savedQuests.contains(quest))
+            if(ShowQuestsActivity.savedQuests.contains(quest))
                 ShowQuestsActivity.savedQuests.remove(quest);
         }
     }
@@ -50,8 +49,8 @@ public class QuestSlidePageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //null if there are no quests saved
-        if(ShowQuestsActivity.savedQuests!=null&&ShowQuestsActivity.savedQuests!=null&&ShowQuestsActivity.savedQuests.contains(quest)){
+
+        if(ShowQuestsActivity.hasQuests&&ShowQuestsActivity.savedQuests.contains(quest)){
             mSaveQuest.setChecked(true);
         }
         else{
@@ -68,9 +67,6 @@ public class QuestSlidePageFragment extends Fragment {
                 R.layout.fragment_quest_slide_page,container,false);
 
         //Get the information from the bundle
-
-
-
         //Quest Information
         quest.id = getArguments().getString("questId");
         quest.name = getArguments().getString("questName");
@@ -78,9 +74,11 @@ public class QuestSlidePageFragment extends Fragment {
         quest.image = getArguments().getString("questImage");
 
         //Giver Information
-        giver.id = getArguments().getString("questGiverId");
-        giver.name = getArguments().getString("questGiverName");
-        giver.image = getArguments().getString("questGiverImage");
+        quest.giver.id = getArguments().getString("questGiverId");
+        quest.giver.name = getArguments().getString("questGiverName");
+        quest.giver.image = getArguments().getString("questGiverImage");
+
+
 
         //Get the views in fragment
         TextView mQuestName = (TextView) rootView.findViewById(R.id.txt_quest_name);
@@ -91,19 +89,26 @@ public class QuestSlidePageFragment extends Fragment {
         mSaveQuest = (CheckBox) rootView.findViewById(R.id.save_check);
 
         //Check if something is not available
-        quest.name = quest.name.isEmpty()?"Quest Name Not Provided":quest.name;
-        quest.description = quest.description.isEmpty()?"Quest Description Not Provided":quest.description;
-        giver.name = giver.name.isEmpty()?"Quest Giver Not Provided":giver.name;
-
+        quest.name = quest.name.isEmpty() ? "Quest Name Not Provided" : quest.name;
+        quest.description = quest.description.isEmpty() ? "Quest Description Not Provided" : quest.description;
         //Set Default Image if nothing is provided
-        quest.image = quest.image.isEmpty()?Util.DEFAULT_QUEST_IMAGE:quest.image;
-        giver.image = giver.image.isEmpty()?Util.DEFAULT_GIVER_IMAGE:giver.image;
+        quest.image = quest.image.isEmpty() ? Util.DEFAULT_QUEST_IMAGE : quest.image;
+
+
+
+
+
+        quest.giver.name = quest.giver.name.isEmpty() ? "Quest Giver Not Provided" : quest.giver.name;
+        quest.giver.image = quest.giver.image.isEmpty() ? Util.DEFAULT_GIVER_IMAGE : quest.giver.image;
+        mQuestGiver.setText(quest.giver.name);
+
 
         mQuestName.setText(quest.name);
         mQuestDescription.setText(quest.description);
-        mQuestGiver.setText(giver.name);
         Picasso.with(mQuestImage.getContext()).load(quest.image).into(mQuestImage);
-        Picasso.with(mQuestGiverImage.getContext()).load(giver.image).into(mQuestGiverImage);
+        Picasso.with(mQuestGiverImage.getContext()).load(quest.giver.image).into(mQuestGiverImage);
+
+
 
 
         final String finalQuestImage = quest.image;
@@ -117,18 +122,20 @@ public class QuestSlidePageFragment extends Fragment {
             }
         });
 
-        final String finalQuestGiverImage = giver.image;
-        mQuestGiverImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Pass the image to the image dialog activity
-                Intent dialogIntent = new Intent(mQuestGiverImage.getContext(), ImageDialogActivity.class);
-                dialogIntent.putExtra("dialogPicture", finalQuestGiverImage);
-                startActivity(dialogIntent);
-            }
-        });
 
-        final Kingdoms.Quests finalQuest = new Kingdoms.Quests(quest);
+            final String finalQuestGiverImage = quest.giver.image;
+            mQuestGiverImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Pass the image to the image dialog activity
+                    Intent dialogIntent = new Intent(mQuestGiverImage.getContext(), ImageDialogActivity.class);
+                    dialogIntent.putExtra("dialogPicture", finalQuestGiverImage);
+                    startActivity(dialogIntent);
+                }
+            });
+
+
+        //final Kingdoms.Quests finalQuest = new Kingdoms.Quests(quest);
         /*
         mSaveQuest.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -162,9 +169,11 @@ public class QuestSlidePageFragment extends Fragment {
         kingdomFragmentInfo.putString("questImage",quest.image);
 
         //Giver Information
-        kingdomFragmentInfo.putString("questGiverId",quest.giver.id);
-        kingdomFragmentInfo.putString("questGiverName",quest.giver.name);
-        kingdomFragmentInfo.putString("questGiverImage",quest.giver.image);
+
+            kingdomFragmentInfo.putString("questGiverId", quest.giver.id);
+            kingdomFragmentInfo.putString("questGiverName", quest.giver.name);
+            kingdomFragmentInfo.putString("questGiverImage", quest.giver.image);
+
 
         fragment.setArguments(kingdomFragmentInfo);
 

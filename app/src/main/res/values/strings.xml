@@ -19,5 +19,11 @@
     <string name="title_activity_saved_quests">SavedQuestsActivity</string>
     <string name="save_label">Save</string>
 
+    <string name="sr_saved_items">savedItems</string>
+    <string name="sr_saved_quests">quests</string>
+
+    <string name="challenge_myriadapps">https://challenge2015.myriadapps.com</string>
+    <string name="no_saved_quests">No Saved Quests\nTo save quests:\nClick on the \'Save\' Button while viewing the quests\n</string>
+
 
 </resources>
