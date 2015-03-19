@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -11,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -237,7 +240,7 @@ public class SignUpActivity extends Activity {
                 if(!newUser.getMessage().contains("thank you for subscribing")){
                     throw new InterruptedException() ;
                 }
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                 return false;
             }
             newUser.setEmail(mEmail);
@@ -262,8 +265,20 @@ public class SignUpActivity extends Activity {
                 startActivity(mainIntent);
                 finish();
             } else {
-                mNameView.setError(getString(R.string.error_sign_up));
-                mNameView.requestFocus();
+                // Creating alert Dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(SignUpActivity.this, R.style.Platform_AppCompat_Light_Dialog));
+                builder.setMessage(R.string.dialog_no_internet_message)
+                        .setTitle(R.string.dialog_error_title)
+                        .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Intent savedQuestsIntent = new Intent(SignUpActivity.this,SignUpActivity.class);
+                                startActivity(savedQuestsIntent);
+                                finish();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         }
 

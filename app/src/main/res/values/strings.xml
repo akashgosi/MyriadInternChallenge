@@ -24,6 +24,8 @@
 
     <string name="challenge_myriadapps">https://challenge2015.myriadapps.com</string>
     <string name="no_saved_quests">No Saved Quests\nTo save quests:\nClick on the \'Save\' Button while viewing the quests\n</string>
+    <string name="dialog_no_internet_message">Please check your network settings</string>
+    <string name="dialog_error_title">Cannot Connect to Server</string>
 
 
 </resources>

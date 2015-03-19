@@ -3,6 +3,9 @@ package com.akash.gosi.myriadinternchallenge;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -12,6 +15,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import retrofit.RestAdapter;
 
@@ -82,6 +87,7 @@ public class ShowKingdomsActivity extends ActionBarActivity {
         mKingdomTask.execute((Void) null);
 
 
+
         //Create a menu item object
         MenuItems menuItems = new MenuItems(TITLES,ICONS,userName,userEmail);
         //Sliding Drawer
@@ -106,13 +112,10 @@ public class ShowKingdomsActivity extends ActionBarActivity {
                 super.onDrawerClosed(drawerView);
             }
 
-        }; // Drawer Toggle Object Made
+        };
+        // Drawer Toggle Object Made
         mDrawerLayout.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
-
-
-
-
     }
 
 
@@ -163,7 +166,9 @@ public class ShowKingdomsActivity extends ActionBarActivity {
                 if(kingdoms.isEmpty()){
                     throw new InterruptedException() ;
                 }
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
+
+                System.out.println("error");
                 return false;
             }
 
@@ -182,8 +187,24 @@ public class ShowKingdomsActivity extends ActionBarActivity {
                 mRecyclerView.setAdapter(mAdapter);
 
             } else {
+                // Creating alert Dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(ShowKingdomsActivity.this, R.style.Platform_AppCompat_Light_Dialog));
+                builder.setMessage(R.string.dialog_no_internet_message)
+                        .setTitle(R.string.dialog_error_title)
+                        .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User clicked OK button
+                                //Maybe load cache content??
+                                //Exit the app...
+                                Toast.makeText(ShowKingdomsActivity.this,"You can check your saved quests though",Toast.LENGTH_LONG).show();
+                                Intent savedQuestsIntent = new Intent(ShowKingdomsActivity.this,SavedQuestsActivity.class);
+                                startActivity(savedQuestsIntent);
+                            }
+                        });;
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
-                Toast.makeText(mRecyclerView.getContext(),"Error Occured Try Again",Toast.LENGTH_SHORT);
+
             }
         }
 

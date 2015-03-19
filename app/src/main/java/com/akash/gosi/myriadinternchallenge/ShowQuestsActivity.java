@@ -1,6 +1,9 @@
 package com.akash.gosi.myriadinternchallenge;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
@@ -14,6 +17,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.RecyclerView;
 
 import android.support.v7.widget.Toolbar;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -226,7 +230,7 @@ public class ShowQuestsActivity extends ActionBarActivity {
                 if(kingdom==null){
                     throw new InterruptedException() ;
                 }
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 return false;
             }
             //Get the different fragments for the page viewer
@@ -257,6 +261,19 @@ public class ShowQuestsActivity extends ActionBarActivity {
 
 
             } else {
+                // Creating alert Dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(ShowQuestsActivity.this, R.style.Platform_AppCompat_Light_Dialog));
+                builder.setMessage(R.string.dialog_no_internet_message)
+                        .setTitle(R.string.dialog_error_title)
+                        .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User clicked OK button
+                                finish();
+
+                            }
+                        });;
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
             }
         }
