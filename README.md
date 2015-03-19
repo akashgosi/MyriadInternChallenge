@@ -5,4 +5,6 @@ Hello, this android app was created for the Myriad Intern Challenge as part of t
 <br/>
 It's an app that helps heros find quests in different kingdoms.<br/>
 Apart from the required features, I have added a feature to save the quests locally so the hero can
-access quest information while venturing in far-off lands that have no internet connection.
+access quest information while venturing in far-off lands that have no internet connection.<br/>
+Here is a demo gif<br/>
+![alt tag](https://github.com/akashgosi/MyriadInternChallenge/blob/master/DemoVideo.gif)<br/>
